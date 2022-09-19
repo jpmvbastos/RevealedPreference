@@ -55,12 +55,12 @@ def revealpref(prices, quantities, axiom='both'):
             for j in range(0,len(prices)):
                 n_comparisons +=1
                 if pq.iloc[i,i] >= pq.iloc[i,j] and pq.iloc[j,j] < pq.iloc[j,i]:     
-                        if print_results==True:
+                    if print_results==True:
                             print("Bundle " + str(i) +" (= "+ str(pq.iloc[i,i]) + ") is revealed preferred (>=) to bundle " + str(j) + " (= " +str(pq.iloc[i,j]) + ")",
                                     "       and bundle " + str(j) + " (= "+ str(pq.iloc[j,j]) + ") is NOT revealed preferred (>/) bundle " + str(i) + " (= " +str(pq.iloc[j,i]) + ")", 
                                     "           These choices are consistent with the Weak Axiom of Revealed Preferences (WARP).", sep=os.linesep)
-                        else: 
-                            continue
+                    else: 
+                        continue
                 else:
                     continue
                 
@@ -89,12 +89,12 @@ def revealpref(prices, quantities, axiom='both'):
             for j in range(0,len(prices)):
                 n_comparisons +=1
                 if pq.iloc[i,i] >= pq.iloc[i,j] and pq.iloc[j,j] < pq.iloc[j,i]:     
-                        if print_results==True:
-                            print("Bundle " + str(i) +" (= "+ str(pq.iloc[i,i]) + ") is revealed preferred (>=) to bundle " + str(j) + " (= " +str(pq.iloc[i,j]) + ")",
+                    if print_results==True:
+                        print("Bundle " + str(i) +" (= "+ str(pq.iloc[i,i]) + ") is revealed preferred (>=) to bundle " + str(j) + " (= " +str(pq.iloc[i,j]) + ")",
                                     "       and bundle " + str(j) + " (= "+ str(pq.iloc[j,j]) + ") is NOT revealed preferred (>/) bundle " + str(i) + " (= " +str(pq.iloc[j,i]) + ")", 
                                     "           These choices are consistent with the Weak Axiom of Revealed Preferences (WARP).", sep=os.linesep)
-                        else: 
-                            continue
+                    else: 
+                        continue
                 else:
                     continue
                 
