@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 
 
-def revealpref(prices, quantities):
+def revealpref(prices, quantities, axiom='both'):
     """"
     This function check if choices are consistent with Weak Axiom of Revealed Preferences
     
@@ -47,28 +47,60 @@ def revealpref(prices, quantities):
 
     #if axiom =="both":
     #if print==True: 
+    if axiom=='both': #Check both
+        n_violations = 0
+        n_comparisons = 0
+    #Check WARP
+        for i in range(0,len(prices)):
+            for j in range(0,len(prices)):
+                n_comparisons +=1
+                if pq.iloc[i,i] >= pq.iloc[i,j] and pq.iloc[j,j] < pq.iloc[j,i]:     
+                        print("Bundle " + str(i) +" (= "+ str(pq.iloc[i,i]) + ") is revealed preferred (>=) to bundle " + str(j) + " (= " +str(pq.iloc[i,j]) + ")",
+                                "       and bundle " + str(j) + " (= "+ str(pq.iloc[j,j]) + ") is NOT revealed preferred (>/) bundle " + str(i) + " (= " +str(pq.iloc[j,i]) + ")", 
+                                "           These choices are consistent with the Weak Axiom of Revealed Preferences (WARP).", sep=os.linesep)
+                else:
+                    continue
+                
+                if (pq.iloc[i,i] >= pq.iloc[i,j] and pq.iloc[j,j] < pq.iloc[j,i]) or pq.iloc[i,i] == pq.iloc[j,j]:
+                    continue
 
-#Check WARP
-    for i in range(0,len(prices)):
-        for j in range(0,len(prices)):
-            if pq.iloc[i,i] >= pq.iloc[i,j] and pq.iloc[j,j] < pq.iloc[j,i]:     
-                    print("Bundle " + str(i) +" (= "+ str(pq.iloc[i,i]) + ") is revealed preferred (>=) to bundle " + str(j) + " (= " +str(pq.iloc[i,j]) + ")",
-                            "       and bundle " + str(j) + " (= "+ str(pq.iloc[j,j]) + ") is NOT revealed preferred (>/) bundle " + str(i) + " (= " +str(pq.iloc[j,i]) + ")", 
-                            "           These choices are consistent with the Weak Axiom of Revealed Preferences (WARP).", sep=os.linesep)
-            else:
-                continue
-            
-            if (pq.iloc[i,i] >= pq.iloc[i,j] and pq.iloc[j,j] < pq.iloc[j,i]) or pq.iloc[i,i] == pq.iloc[j,j]:
-                continue
+                else: 
+                    n_violations +=1
+                    print("Choices among bundles " + str(i) + " (=" + str(pq.iloc[i,i]) + ") and " + str(j) + " (=" + str(pq.iloc[i,j]) + ") violate the Weak Axiom of Revelead Preferences.")                
+        
+        print(str(n_violations/n_comparisons*100) + "% of the choices violate WARP")
+    #Check SARP        
+        if [pq.iloc[i,i] >= pq.iloc[i,i+1] for i in range(0,len(prices)-1)] and pq.iloc[len(prices)-1,len(prices)-1] < pq.iloc[len(prices)-1,0]:
+            print("These choices also satisfy SARP!")
 
-            else: 
-                print("Choices among bundles " + str(i) + " (=" + str(pq.iloc[i,i]) + ") and " + str(j) + " (=" + str(pq.iloc[i,j]) + ") violate the Weak Axiom of Revelead Preferences.")                
+        else:
+            print("These choices do NOT satisfy SARP!")
 
-#Check SARP        
-    if [pq.iloc[i,i] >= pq.iloc[i,i+1] for i in range(0,len(prices)-1)] and pq.iloc[len(prices)-1,len(prices)-1] < pq.iloc[len(prices)-1,0]:
-        print("These choices also satisfy SARP!")
+    elif axiom=='warp':  #Check only WARP
+        n_violations = 0
+        n_comparisons = 0
+          for i in range(0,len(prices)):
+            for j in range(0,len(prices)):
+                n_comparisons +=1
+                if pq.iloc[i,i] >= pq.iloc[i,j] and pq.iloc[j,j] < pq.iloc[j,i]:     
+                        print("Bundle " + str(i) +" (= "+ str(pq.iloc[i,i]) + ") is revealed preferred (>=) to bundle " + str(j) + " (= " +str(pq.iloc[i,j]) + ")",
+                                "       and bundle " + str(j) + " (= "+ str(pq.iloc[j,j]) + ") is NOT revealed preferred (>/) bundle " + str(i) + " (= " +str(pq.iloc[j,i]) + ")", 
+                                "           These choices are consistent with the Weak Axiom of Revealed Preferences (WARP).", sep=os.linesep)
+                else:
+                    continue
+                
+                if (pq.iloc[i,i] >= pq.iloc[i,j] and pq.iloc[j,j] < pq.iloc[j,i]) or pq.iloc[i,i] == pq.iloc[j,j]:
+                    continue
 
-    else:
-        print("These choices do NOT satisfy SARP!")
-            
+                else: 
+                    n_violations +=1
+                    print("Choices among bundles " + str(i) + " (=" + str(pq.iloc[i,i]) + ") and " + str(j) + " (=" + str(pq.iloc[i,j]) + ") violate the Weak Axiom of Revelead Preferences.")   
+        
+        print(str(n_violations/n_comparisons*100) + "% of the choices violate WARP")
+    
+    else:  # Check only SARP
+        if [pq.iloc[i,i] >= pq.iloc[i,i+1] for i in range(0,len(prices)-1)] and pq.iloc[len(prices)-1,len(prices)-1] < pq.iloc[len(prices)-1,0]:
+            print("These choices satisfy SARP!")
 
+        else:
+            print("These choices do NOT satisfy SARP!")
