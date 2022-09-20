@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 
 
-def revealpref(prices, quantities, axiom='both'):
+def revealpref(prices, quantities, axiom='both', print_results=True):
     """"
     This function check if choices are consistent with Weak Axiom of Revealed Preferences
     
@@ -28,8 +28,6 @@ def revealpref(prices, quantities, axiom='both'):
     print: True, False
 
         Prints the comparison of each bundle in the set. 
-
-    axiom='warp', print=False
 
     """   
 
@@ -56,8 +54,8 @@ def revealpref(prices, quantities, axiom='both'):
                 n_comparisons +=1
                 if pq.iloc[i,i] >= pq.iloc[i,j] and pq.iloc[j,j] < pq.iloc[j,i]:     
                     if print_results==True:
-                            print("Bundle " + str(i) +" (= "+ str(pq.iloc[i,i]) + ") is revealed preferred (>=) to bundle " + str(j) + " (= " +str(pq.iloc[i,j]) + ")",
-                                    "       and bundle " + str(j) + " (= "+ str(pq.iloc[j,j]) + ") is NOT revealed preferred (>/) bundle " + str(i) + " (= " +str(pq.iloc[j,i]) + ")", 
+                        print("Bundle " + str(i) +" (" + pq.index[i] + "*" + pq.columns[i] +"="+ str(pq.iloc[i,i]) + ") is revealed preferred (>=) to bundle " + str(j) + " (" + pq.index[i] + "*" + pq.columns[j] +"="+ str(pq.iloc[i,j]) + ")",
+                                    "       and bundle " + str(j) + " (" + pq.index[j] + "*" + pq.columns[j] +"="+ str(pq.iloc[j,j]) + ") is NOT revealed preferred (>/) bundle " + str(i) + " (" + pq.index[j] + "*" + pq.columns[i] +"="+ str(pq.iloc[j,i]) + ")", 
                                     "           These choices are consistent with the Weak Axiom of Revealed Preferences (WARP).", sep=os.linesep)
                     else: 
                         continue
@@ -85,13 +83,13 @@ def revealpref(prices, quantities, axiom='both'):
     elif axiom=='warp':  #Check only WARP
         n_violations = 0
         n_comparisons = 0
-          for i in range(0,len(prices)):
+        for i in range(0,len(prices)):
             for j in range(0,len(prices)):
                 n_comparisons +=1
                 if pq.iloc[i,i] >= pq.iloc[i,j] and pq.iloc[j,j] < pq.iloc[j,i]:     
                     if print_results==True:
-                        print("Bundle " + str(i) +" (= "+ str(pq.iloc[i,i]) + ") is revealed preferred (>=) to bundle " + str(j) + " (= " +str(pq.iloc[i,j]) + ")",
-                                    "       and bundle " + str(j) + " (= "+ str(pq.iloc[j,j]) + ") is NOT revealed preferred (>/) bundle " + str(i) + " (= " +str(pq.iloc[j,i]) + ")", 
+                        print("Bundle " + str(i) +" (" + pq.index[i] + "*" + pq.columns[i] +"="+ str(pq.iloc[i,i]) + ") is revealed preferred (>=) to bundle " + str(j) + " (" + pq.index[i] + "*" + pq.columns[j] +"="+ str(pq.iloc[i,j]) + ")",
+                                    "       and bundle " + str(j) + " (" + pq.index[j] + "*" + pq.columns[j] +"="+ str(pq.iloc[j,j]) + ") is NOT revealed preferred (>/) bundle " + str(i) + " (" + pq.index[j] + "*" + pq.columns[i] +"="+ str(pq.iloc[j,i]) + ")", 
                                     "           These choices are consistent with the Weak Axiom of Revealed Preferences (WARP).", sep=os.linesep)
                     else: 
                         continue
@@ -101,12 +99,15 @@ def revealpref(prices, quantities, axiom='both'):
                 if (pq.iloc[i,i] >= pq.iloc[i,j] and pq.iloc[j,j] < pq.iloc[j,i]) or pq.iloc[i,i] == pq.iloc[j,j]:
                     continue
 
-                else: 
+                elif: 
                     n_violations +=1
                     if print_results==True:
                         print("Choices among bundles " + str(i) + " (=" + str(pq.iloc[i,i]) + ") and " + str(j) + " (=" + str(pq.iloc[i,j]) + ") violate the Weak Axiom of Revelead Preferences.")                
                     else:
                         continue
+
+                else:
+                    continue
         print(str(n_violations/n_comparisons*100) + "% of the choices violate WARP")
     
     else:  # Check only SARP
