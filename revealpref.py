@@ -43,7 +43,7 @@ def revealpref(prices, quantities, axiom='both', print_results=True):
         for i in range(0,len(prices)):       
             for j in range(0,len(prices)):
                 if RP.iloc[i,j]==RP.iloc[j,i] and i!=j:
-                    n_violations+=.5
+                    n_violations+=.5 #Loop will find potential violation twice e.g. (1,2)==(2,1) & (2,1)==(1,2)
                     if print_results==True:
                         print("Choices between bundles " + str(i+1) + " and " + str(j+1) + " violate the Weak Axiom of Revelead Preference (WARP)")  
                     else:
@@ -73,7 +73,7 @@ def revealpref(prices, quantities, axiom='both', print_results=True):
         for i in range(0,len(prices)):       
             for j in range(0,len(prices)):
                 if RP.iloc[i,j]==RP.iloc[j,i] and i!=j:
-                    n_violations+=1         
+                    n_violations+=.5 #Loop will find potential violation twice e.g. (1,2)==(2,1) & (2,1)==(1,2)
                     if print_results==True:
                             print("Choices between bundles " + str(i+1) + " and " + str(j+1) + " violate the Weak Axiom of Revelead Preference (WARP)")  
                     else:
