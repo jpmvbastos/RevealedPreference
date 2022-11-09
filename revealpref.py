@@ -27,7 +27,7 @@ def revealpref(prices, quantities, axiom='both', print_results=True):
     index = [str(i+1) for i in range(0,len(prices))]
     RP = pd.DataFrame(np.zeros([len(prices),len(prices)]),columns=index, index=index)
     n_violations = 0
-    n_comparisons = 0
+    n_comparisons = np.math.factorial(len(prices)) / (2 * (np.math.factorial(len(prices)-2))) # Possible combinations between bundles
     for i in range(0,len(prices)):
         for j in range(0,len(prices)):
             n_comparisons +=.5
@@ -73,7 +73,7 @@ def revealpref(prices, quantities, axiom='both', print_results=True):
         for i in range(0,len(prices)):       
             for j in range(0,len(prices)):
                 if RP.iloc[i,j]==RP.iloc[j,i] and i!=j:
-                    n_violations+=.5                   
+                    n_violations+=1         
                     if print_results==True:
                             print("Choices between bundles " + str(i+1) + " and " + str(j+1) + " violate the Weak Axiom of Revelead Preference (WARP)")  
                     else:
