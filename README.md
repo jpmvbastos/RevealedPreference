@@ -78,3 +78,7 @@ Houthakker, H. S. (1950). Revealed preference and the utility function. _Economi
 Samuelson, P. A. (1938). A note on the pure theory of consumer’s behaviour. _Economica_, 5(17), 61. doi:10.2307/2548836
 
 Varian, H. R. (2006). Revealed Preference. Working paper.
+
+#### Version:
+
+February 2026

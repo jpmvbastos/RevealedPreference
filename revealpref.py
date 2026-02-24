@@ -2,7 +2,7 @@
 Revealed Preferences
 See: https://github.com/jpmvbastos/RevealedPreference
 Author: João Pedro Bastos
-Version: September 2022
+Version: February 2026
 """
 
 import math
